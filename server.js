@@ -106,9 +106,9 @@ app.get('/ai', (req, res) => {
 });
 
 app.get('/ai/:newspaperName', (req, res) => {
-  const newspaperId = req.params.newspaperId;
+  const newspaperName = req.params.newspaperName;
 
-  const newspaper = newspapers.find(newspaper => newspaper.name === newspaperId);
+  const newspaper = newspapers.find(newspaper => newspaper.name === newspaperName);
 
   if (!newspaper) {
     return res.status(404).json({ error: 'Newspaper not found' });
@@ -129,7 +129,7 @@ app.get('/ai/:newspaperName', (req, res) => {
         specificArticles.push({
           title: cleanTitle,
           url: newspaper.base + url,
-          source: newspaperId
+          source: newspaperName
         });
       });
 
