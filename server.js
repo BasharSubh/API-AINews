@@ -15,26 +15,6 @@ const newspapers = [
     base: ''
   },
   {
-    name: 'Engadget',
-    address: 'https://www.engadget.com/tag/ai/',
-    base: 'https://www.engadget.com'
-  },
-  {
-    name: 'TheVerge',
-    address: 'https://www.theverge.com/ai-artificial-intelligence',
-    base: 'https://www.theverge.com'
-  },
-  {
-    name: 'Wired',
-    address: 'https://www.wired.com/tag/artificial-intelligence/', 
-    base: 'https://www.wired.com'
-  },
-  {
-    name: 'Gizmodo',
-    address: 'https://gizmodo.com/tag/ai',
-    base: ''
-  },
-  {
     name: 'Mashable',
     address: 'https://mashable.com/category/artificial-intelligence',
     base: 'https://mashable.com'
@@ -44,7 +24,16 @@ const newspapers = [
     address: 'https://www.zdnet.com/topic/artificial-intelligence/',
     base: 'https://www.zdnet.com'
     },
-  
+  {
+    name: 'Analytics India Magazine',
+    address: 'https://analyticsindiamag.com/',
+    base: ''
+  },
+  {
+    name: 'ReadWrite',
+    address: 'https://readwrite.com/',
+    base: ''
+  },
 ];
 
 const articles = [];
@@ -58,13 +47,22 @@ newspapers.forEach(newspaper => {
       $('a:contains("AI"), a:contains("artificial-intelligence")', html).each(function () {
         const title = $(this).text().trim().replace(/[\n\t]+/g, '');
         const url = $(this).attr('href');
+        const img = findNearestImgSrc($(this))
 
+        // let img
+        // if ($(this).parent().find('img').attr('src')) {
+        //   img = $(this).parent().find('img').attr('src')
+        // } else if ($(this).parent().parent().find('img').attr('src')) {
+        //   img = $(this).parent().parent().find('img').attr('src')
+        // }
+        // lets make a function called findNearestImgSrc 
         const cleanTitle = title.replace(/<[^>]+>/g, '');
 
         if (cleanTitle && cleanTitle.length > 20) {
           articles.push({
             title: cleanTitle,
             url: newspaper.base + url,
+            img: img,
             source: newspaper.name
           });
         }
@@ -74,6 +72,19 @@ newspapers.forEach(newspaper => {
       console.error(`Error fetching articles from ${newspaper.name}:`, error);
     });
 });
+
+function findNearestImgSrc(element) {
+  let img
+  let currentElement = element;
+  while (!img) {
+    if (currentElement.find('img').attr('src')) {
+      return  img = currentElement.find('img').attr('src')
+    } else {
+      currentElement = currentElement.parent();
+    }
+  }
+  return null; // Return null if no img element is found in the ancestors
+}
 
 app.get('/', (req, res) => {
     res.json({
