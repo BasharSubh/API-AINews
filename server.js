@@ -25,7 +25,7 @@ const newspapers = [
     base: 'https://www.zdnet.com'
     },
   {
-    name: 'Analytics India Magazine',
+    name: 'AnalyticsIndiaMagazine',
     address: 'https://analyticsindiamag.com/',
     base: ''
   },
@@ -123,7 +123,7 @@ app.get('/ai', (req, res) => {
 app.get('/ai/:newspaperName', (req, res) => {
   const newspaperName = req.params.newspaperName;
 
-  const newspaper = newspapers.find(newspaper => newspaper.name === newspaperName);
+  const newspaper = newspapers.find(newspaper => newspaper.name.toLowerCase() === newspaperName.toLowerCase());
 
   if (!newspaper) {
     return res.status(404).json({ error: 'Newspaper not found' });
