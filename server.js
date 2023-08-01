@@ -29,11 +29,6 @@ const newspapers = [
     address: 'https://analyticsindiamag.com/',
     base: ''
   },
-  {
-    name: 'ReadWrite',
-    address: 'https://readwrite.com/',
-    base: ''
-  },
 ];
 
 const articles = [];
