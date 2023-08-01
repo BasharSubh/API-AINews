@@ -138,12 +138,14 @@ app.get('/ai/:newspaperName', (req, res) => {
       $('a:contains("AI"), a:contains("artificial-intelligence")', html).each(function () {
         const title = $(this).text().trim().replace(/[\n\t]+/g, '');
         const url = $(this).attr('href');
+        const img = findNearestImgSrc($(this))
 
         const cleanTitle = title.replace(/<[^>]+>/g, '');
 
         specificArticles.push({
           title: cleanTitle,
           url: newspaper.base + url,
+          img: img,
           source: newspaperName
         });
       });
